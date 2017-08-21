@@ -9,14 +9,14 @@ public class TractionMotor {
 	private EV3LargeRegulatedMotor motorLeft, rightMotor;
 	private EV3LargeRegulatedMotor[] synchro;
 
-	private static boolean isMoving = false;
+	private static boolean isMoving = true;
 	public final static float maxSpeed = 120f;
 	public final static float cmInDegres = 0.037699112f; // pas touche (en fct des roues)
 	public final static float wheelSpacing = 9.5f;
 	// LIMITES DE DETECTION D'UN VEHICULE
 	private final static float lastLimit = 10f; // en dessous, le robot stop
 	private final static float secondLimit = 15f; // jusqu'ici, le robot garde 75% de sa vitesse
-	private final static float firstLimit = 30f; // passé cette limite, le robot est à plein
+	public final static float firstLimit = 25f; // passé cette limite, le robot est à plein
 							// régime
 	private final static float speedAtSecondLimit = 3f / 4f; // % de vitesse à la 2ème limite
 	public static float currentSpeed;

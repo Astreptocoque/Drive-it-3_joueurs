@@ -19,19 +19,21 @@ public class RobotControls {
 	private static float intensity = 0;
 	private static float previousSpeed = 0;
 	private static float previousTachoCount = 0;
+	private static float previousDistance = 0;
 	public static int mode;
 
 	public RobotControls() {
 		// mode course à 3
-
 		directionMotor = new DirectionMotor();
 		ultrasonicMotor = new UltrasonicMotor();
 		color = new ColorSensor();
 		ultrasonic = new UltrasonicSensor();
-		tractionMotor = new TractionMotor();
 		previousSpeed = TractionMotor.currentSpeed;
-
+		
+		System.out.println("Placer le robot sur la piste et presser ENTER");
+		Button.ENTER.waitForPressAndRelease();
 		Track.updateTrackInfos(color.getIntensity());
+		tractionMotor = new TractionMotor();
 
 	}
 
@@ -127,7 +129,7 @@ public class RobotControls {
 			while (!ultrasonicMotor.previousMoveComplete()) {
 				distance = ultrasonic.getDistance();
 				// si on détecte un véhicule
-				if (distance <= 50)
+				if (distance <= UltrasonicSensor.maxDetectedDistance -1)
 					vehicle = true;
 			}
 			// à la fin de la détection, on regarde si un véhicule a été détecté
@@ -188,7 +190,9 @@ public class RobotControls {
 	 */
 	public void updateSpeed() {
 		// définition de la vitesse
-		float speed = tractionMotor.determineSpeed(ultrasonic.getDistance());
+		previousDistance = ultrasonic.getDistance();
+		float speed = tractionMotor.determineSpeed(previousDistance);
+		System.out.println(speed);
 		tractionMotor.setSpeed(speed);
 	}
 
@@ -197,7 +201,7 @@ public class RobotControls {
 		// si la vitesse précédente est plus petite, c'est qu'on réaccélère, donc qu'on a
 		// atteint la vitesse de l'autre véhicul
 
-		if (previousSpeed < TractionMotor.currentSpeed) {
+		if (previousSpeed < TractionMotor.currentSpeed && ultrasonic.getDistance() < TractionMotor.firstLimit) {
 			float remainingDistance = Track.trackPartLength - tractionMotor.getTachoCount();
 			if (remainingDistance > Track.overtakingLength) {
 				Track.verifiyFreeWay = true;

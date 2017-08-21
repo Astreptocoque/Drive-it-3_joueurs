@@ -9,7 +9,7 @@ public class UltrasonicSensor {
 	private SampleProvider capteurUltrason;
 	private float[] sampleCapteurUltrason;
 	
-	private final static int maxDetectedDistance = 50;
+	public final static int maxDetectedDistance = 50;
 
 	public UltrasonicSensor() {
 		capteurUltrason = new NXTUltrasonicSensor(SensorPort.S2).getDistanceMode();

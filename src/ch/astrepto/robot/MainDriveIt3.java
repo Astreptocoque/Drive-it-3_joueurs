@@ -4,13 +4,11 @@ import lejos.hardware.Button;
 import lejos.hardware.lcd.LCD;
 import lejos.utility.Delay;
 
-public class MainDriveIt {
+public class MainDriveIt3 {
 
 	public static void main(String[] args) {
 
 		// à faire avant de déposer le robot sur la piste
-
-//		chooseMode();
 		RobotControls rob = new RobotControls();
 		displayStart();
 		rob.robotStart();
@@ -198,6 +196,7 @@ public class MainDriveIt {
 		LCD.drawString("ENTER", 7, 5, false);
 
 		Button.ENTER.waitForPress();
+		LCD.clear();
 	}
 
 	private static void drawArrow(int direction, int size, int x, int y, int color) {

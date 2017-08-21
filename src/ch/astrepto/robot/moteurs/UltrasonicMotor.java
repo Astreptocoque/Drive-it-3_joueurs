@@ -61,6 +61,12 @@ public class UltrasonicMotor {
 		// si l'angle est lié au roue
 		if (boundWithWheels) {
 
+			// si l'angle dépasse les bornes
+			if(angleP > DirectionMotor.maxDegree)
+				angleP = DirectionMotor.maxDegree;
+			else if (angleP < -DirectionMotor.maxDegree)
+				angleP = -DirectionMotor.maxDegree;
+			
 			// mise à l'échelle de l'angle Direction à l'angle Ultrason
 			angle = maxDirectionDegree / DirectionMotor.maxDegree * angleP;
 			// transformation de l'angle final en nombre de ° que doit faire le robot
